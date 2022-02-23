@@ -2,7 +2,6 @@ package services;
 
 import requests.loginRequest;
 import responses.loginResponse;
-import models.user;
 
 /**
  * a service class to help login the user to the application

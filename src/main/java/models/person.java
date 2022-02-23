@@ -1,10 +1,12 @@
 package models;
 
 
+import java.util.Objects;
+
 /**
  * The model for a particular row in the person database
  */
-public class person {
+public class Person {
     /**
      * String personID - the ID of the person of this particular row
      * String associatedUsername - the associated username of the user to this person in this particular row
@@ -17,17 +19,18 @@ public class person {
     private String personID;
     private String associatedUsername;
     private String firstName;
-    private String lasName;
+    private String lastName;
     private String gender;
+    private String spouseID=null;
     private String fatherID=null;
     private String motherID=null;
 
-    public person(String personID, String associatedUsername, String firstName, String lasName, String gender,
+    public Person(String personID, String associatedUsername, String firstName, String lasName, String gender,
                   String fatherID, String motherID, String spouseID) {
         this.personID = personID;
         this.associatedUsername = associatedUsername;
         this.firstName = firstName;
-        this.lasName = lasName;
+        this.lastName = lasName;
         this.gender = gender;
         this.fatherID = fatherID;
         this.motherID = motherID;
@@ -58,12 +61,12 @@ public class person {
         this.firstName = firstName;
     }
 
-    public String getLasName() {
-        return lasName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLasName(String lasName) {
-        this.lasName = lasName;
+    public void setLastName(String lasName) {
+        this.lastName = lasName;
     }
 
     public String getGender() {
@@ -98,6 +101,14 @@ public class person {
         this.spouseID = spouseID;
     }
 
-    private String spouseID=null;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(personID, person.personID) && Objects.equals(associatedUsername, person.associatedUsername)
+                && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(gender, person.gender)
+                && Objects.equals(fatherID, person.fatherID) && Objects.equals(motherID, person.motherID) && Objects.equals(spouseID, person.spouseID);
+    }
 
 }

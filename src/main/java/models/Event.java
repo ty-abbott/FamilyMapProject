@@ -110,4 +110,15 @@ public class Event {
     public void setYear(int year) {
         this.year = year;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return Objects.equals(eventID, event.eventID) && Objects.equals(associatedUsername, event.associatedUsername) &&
+                Objects.equals(personID, event.personID) && Objects.equals(latitude, event.latitude) && Objects.equals(longitude, event.longitude)
+                && Objects.equals(country, event.country) && Objects.equals(city, event.city) && Objects.equals(eventType, event.eventType)
+                && Objects.equals(year, event.year);
+    }
 }

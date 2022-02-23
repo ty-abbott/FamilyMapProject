@@ -1,8 +1,8 @@
 package requests;
 
 import models.Event;
-import models.person;
-import models.user;
+import models.Person;
+import models.User;
 
 /**
  * request class for the load functionality
@@ -14,23 +14,23 @@ public class loadRequest {
      * person[] - array of people
      * events[] - array of events
      */
-    private user[] userArray;
-    private person[] personsArray;
+    private User[] userArray;
+    private Person[] personsArray;
     private Event[] eventsArray;
 
-    public user[] getUserArray() {
+    public User[] getUserArray() {
         return userArray;
     }
 
-    public void setUserArray(user[] userArray) {
+    public void setUserArray(User[] userArray) {
         this.userArray = userArray;
     }
 
-    public person[] getPersonsArray() {
+    public Person[] getPersonsArray() {
         return personsArray;
     }
 
-    public void setPersonsArray(person[] personsArray) {
+    public void setPersonsArray(Person[] personsArray) {
         this.personsArray = personsArray;
     }
 

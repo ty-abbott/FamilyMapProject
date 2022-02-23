@@ -1,13 +1,13 @@
 package responses;
 
 
-import models.person;
+import models.Person;
 
 /**
  * the response object of getting all the family information for a person or user.
  */
 public class familyResponse {
-    private person[] family;
+    private Person[] family;
     private String message;
     private boolean success;
 
@@ -16,7 +16,7 @@ public class familyResponse {
      * @param family - family - an array of people that represents all the generations of the person
      * @param success - success - bool on whether it worked or not
      */
-    public familyResponse(person[] family, boolean success) {
+    public familyResponse(Person[] family, boolean success) {
         this.family = family;
         this.success = success;
     }
@@ -31,11 +31,11 @@ public class familyResponse {
         this.success = success;
     }
 
-    public person[] getFamily() {
+    public Person[] getFamily() {
         return family;
     }
 
-    public void setFamily(person[] family) {
+    public void setFamily(Person[] family) {
         this.family = family;
     }
 

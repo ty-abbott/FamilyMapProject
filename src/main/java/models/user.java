@@ -1,9 +1,11 @@
 package models;
 
+import java.util.Objects;
+
 /**
  * The model of a row of data found in the user table of the database
  */
-public class user {
+public class User {
     /**
      * String username - the username of the user
      * String password - the password of the user
@@ -21,7 +23,7 @@ public class user {
     private String gender;
     private String personID;
 
-    public user(String username, String password, String email, String firstname, String lastname, String gender,
+    public User(String username, String password, String email, String firstname, String lastname, String gender,
                 String personID) {
         this.username = username;
         this.password = password;
@@ -88,8 +90,18 @@ public class user {
         this.personID = personID;
     }
 
-    public user values(){
+    public User values(){
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o==null|| getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email)
+                && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(gender, user.gender)
+                && Objects.equals(personID, user.personID);
     }
 }
 
