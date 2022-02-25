@@ -2,11 +2,12 @@ package services;
 
 import requests.loginRequest;
 import responses.loginResponse;
+import dao.UserDAO;
 
 /**
  * a service class to help login the user to the application
  */
-public class login {
+public class loginService {
 
 
     /**
@@ -15,6 +16,14 @@ public class login {
      * @return response of whether or not the service worked.
      */
     public loginResponse login(loginRequest body){
+
+        if(body.getUsername() == null || body.getPassword() == null) {
+            loginResponse resp = new loginResponse("Error: there was no username or password passed provided", false);
+            return resp;
+        }
+        else{
+
+        }
         return null;
     }
 
@@ -23,7 +32,6 @@ public class login {
      * @return a string of the authtoken
      */
     public String authToken() {
-
         return null;
     }
 }

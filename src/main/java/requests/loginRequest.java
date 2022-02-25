@@ -12,6 +12,9 @@ public class loginRequest {
     private String username;
     private String password;
 
+    public loginRequest(){
+
+    }
 
     public String getUsername() {
         return username;
