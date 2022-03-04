@@ -2,8 +2,11 @@ import java.io.*;
 import java.net.*;
 import com.sun.net.httpserver.*;
 import handlers.*;
-public class Server {
+import helpers.loadJSON;
+import models.Location;
+import models.LocationData;
 
+public class Server {
     private static final int MAX_WAITING_CONNECTIONS = 12;
     private HttpServer server;
 
@@ -26,6 +29,14 @@ public class Server {
         System.out.println("Starting server");
         server.start();
         System.out.println("Server started. Listening on port " + port);
+        try {
+            loadJSON execute = new loadJSON();
+            execute.load();
+            System.out.println();
+        }catch(FileNotFoundException e) {
+            System.out.println("THere was a problem with loading the JSON");
+            e.printStackTrace();
+        }
     }
 
     private void registerHandlers() {

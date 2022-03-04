@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 /**
  * this is the model for a row in the database of authtokens
  */
@@ -30,5 +32,11 @@ public class AuthToken {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthToken token = (AuthToken) o;
+        return Objects.equals(authtoken, token.getAuthtoken()) && Objects.equals(username, token.getUsername());
     }
 }

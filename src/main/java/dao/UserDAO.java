@@ -22,7 +22,6 @@ public class UserDAO {
      * this will insert into the user table.
      * @param body - this is the user model that is passed into the method. This has all the information necessary to
      *             insert the user into the database.
-     * @return a user model of the user that was inserted, if there was a problem then null will be returned.
      */
     public void insert(User body) throws DataAccessException {
         //this will insert the user in the database

@@ -1,5 +1,5 @@
 package responses;
-import services.register;
+import services.registerService;
 
 /**
  * response of the information given when the person registers in the database with the app.
@@ -76,11 +76,11 @@ public class registerResponse {
         this.success = success;
     }
 
-    public registerResponse allValues(register body) {
+    public registerResponse allValues(registerService body) {
         return this;
     }
 
-    public registerResponse errorMessage(register body) {
+    public registerResponse errorMessage(registerService body) {
         return this;
     }
 }

@@ -1,5 +1,7 @@
 package models;
 
+import dao.DataAccessException;
+
 import java.util.Objects;
 
 /**
@@ -24,7 +26,7 @@ public class User {
     private String personID;
 
     public User(String username, String password, String email, String firstname, String lastname, String gender,
-                String personID) {
+                String personID) throws DataAccessException {
         this.username = username;
         this.password = password;
         this.email = email;
