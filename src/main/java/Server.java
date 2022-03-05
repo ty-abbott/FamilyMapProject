@@ -29,14 +29,7 @@ public class Server {
         System.out.println("Starting server");
         server.start();
         System.out.println("Server started. Listening on port " + port);
-        try {
-            loadJSON execute = new loadJSON();
-            execute.load();
-            System.out.println();
-        }catch(FileNotFoundException e) {
-            System.out.println("THere was a problem with loading the JSON");
-            e.printStackTrace();
-        }
+
     }
 
     private void registerHandlers() {
@@ -44,13 +37,13 @@ public class Server {
         server.createContext("/", new fileHandler());
         server.createContext("/user/register", new registerHandler());
         server.createContext("/user/login", new loginHandler());
-        server.createContext("/clear", new clearHandler());
-        server.createContext("/fill", new fillHandler());
-        server.createContext("/load", new loadHandler());
         server.createContext("/person/", new singlePersonHandler());
-        server.createContext("/person", new personHandler());
         server.createContext("/event/", new singleEventHandler());
         server.createContext("/event", new eventsHandler());
+        server.createContext("/fill", new fillHandler());
+        server.createContext("/load", new loadHandler());
+        server.createContext("/clear", new clearHandler());
+        server.createContext("/person", new personHandler());
 
     }
 }

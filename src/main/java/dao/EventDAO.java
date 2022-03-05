@@ -97,4 +97,16 @@ public class EventDAO{
             throw new DataAccessException("Error encountered while clearing the event table");
         }
     }
+
+    public void clearEvents(String username) throws DataAccessException, SQLException {
+
+        String sql = "DELETE FROM Events WHERE AssociatedUsername = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered deleting user from datbase");
+        }
+    }
 }

@@ -34,6 +34,7 @@ public class clearService {
             uDAO.clear();
             db.closeConnection(true);
         } catch (DataAccessException e) {
+            db.closeConnection(false);
             defaultResponse resp = new defaultResponse("Error: There was a problem clearing from the database", false);
             e.printStackTrace();
             return resp;

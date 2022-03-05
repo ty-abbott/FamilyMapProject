@@ -71,12 +71,24 @@ public class PersonDAO {
      * @return returns true if successful and false if not.
      */
     public void clear()throws DataAccessException{
-        String sql = "DELETE FROM PERSON";
+        String sql = "DELETE FROM Person";
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error encountered when deleting from the database");
+        }
+    }
+
+    public void deletePerson(String username) throws DataAccessException, SQLException {
+
+        String sql = "DELETE FROM Person WHERE associatedUsername = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered deleting user from datbase");
         }
     }
 }
