@@ -8,7 +8,7 @@ import dao.UserDAO;
 import dao.Database;
 import java.sql.Connection;
 import java.util.Objects;
-import helpers.authToken;
+import helpers.AuthTokenHelper;
 
 import models.User;
 import models.AuthToken;
@@ -29,7 +29,7 @@ public class loginService {
         Connection conn = db.getConnection();
         UserDAO uDao = new UserDAO(conn);
         AuthTokenDAO authDao = new AuthTokenDAO(conn);
-        authToken authtoken = new authToken();
+        AuthTokenHelper authtoken = new AuthTokenHelper();
 
 
         if(body.getUsername() == null || body.getPassword() == null) {
@@ -38,6 +38,7 @@ public class loginService {
         }
         else{
             User user = uDao.find(body.getUsername());
+            db.closeConnection(false);
             if(user == null){
                 loginResponse resp = new loginResponse("Error: there is no user in the database with this username", false);
                 return resp;
@@ -49,6 +50,7 @@ public class loginService {
             String auth = authtoken.getAuthToken();
             AuthToken tokenModel = new AuthToken(auth, user.getUsername());
             authDao.insert(tokenModel);
+            db.closeConnection(true);
             loginResponse resp = new loginResponse(auth, user.getUsername(), user.getPersonID(), true);
             return resp;
         }

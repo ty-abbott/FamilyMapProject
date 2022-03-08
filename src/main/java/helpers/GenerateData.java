@@ -21,7 +21,6 @@ public class GenerateData {
     }
 
     public void generatePerson(Person person, int generations, int baseYear) throws DataAccessException, FileNotFoundException {
-
         familyData.load();
         Connection conn = db.getConnection();
         Random random = new Random();
@@ -31,6 +30,7 @@ public class GenerateData {
         person.setMotherID(motherID);
         person.setFatherID(fatherID);
         baseYear = baseYear - 20;
+
         if(person.getMotherID()!=null && person.getFatherID()!=null){
             PersonDAO personObj = new PersonDAO(conn);
             personObj.insert(person);
@@ -40,10 +40,12 @@ public class GenerateData {
                 surname, "female");
         Person father = new Person(fatherID, person.getAssociatedUsername(), familyData.maleNames.getData()[random.nextInt(NAME_RANDOM)],
                 surname, "male");
+        mother.setSpouseID(fatherID);
+        father.setSpouseID(motherID);
 
         String fatherEventID = id.getID();
         String motherEventID = id.getID();
-        areaData = familyData.locData.getData()[LOC_RANDOM];
+        areaData = familyData.locData.getData()[random.nextInt(100)];
 
         Event motherBirthEvent = new Event(motherEventID, person.getAssociatedUsername(), motherID, areaData.getLatitude(),
                 areaData.getLongitude(), areaData.getCountry(), areaData.getCity(), "Birth", baseYear);

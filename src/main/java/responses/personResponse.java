@@ -41,12 +41,21 @@ public class personResponse {
         this.success = success;
     }
 
+    public personResponse(String associatedUsername, String personID, String firstName, String lastName, String gender, boolean success) {
+        this.associatedUsername = associatedUsername;
+        this.personID = personID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.success = success;
+    }
+
     /**
      * this constructor is called if the service was not successful
      * @param success - boolean success - a boolean that states if the service was successful
      * @param message - String message - the message of if the service worked or not. If it did not then the error is included.
      */
-    public personResponse(boolean success, String message) {
+    public personResponse(String message, boolean success ) {
         this.success = success;
         this.message = message;
     }

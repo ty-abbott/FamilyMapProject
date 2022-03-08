@@ -14,31 +14,35 @@ public class loadRequest {
      * person[] - array of people
      * events[] - array of events
      */
-    private User[] userArray;
-    private Person[] personsArray;
-    private Event[] eventsArray;
+    private User[] users;
+    private Person[] persons;
+    private Event[] events;
 
-    public User[] getUserArray() {
-        return userArray;
+    loadRequest(){
+
     }
 
-    public void setUserArray(User[] userArray) {
-        this.userArray = userArray;
+    public User[] getUsers() {
+        return users;
     }
 
-    public Person[] getPersonsArray() {
-        return personsArray;
+    public void setUsers(User[] users) {
+        this.users = users;
     }
 
-    public void setPersonsArray(Person[] personsArray) {
-        this.personsArray = personsArray;
+    public Person[] getPersons() {
+        return persons;
     }
 
-    public Event[] getEventsArray() {
-        return eventsArray;
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
     }
 
-    public void setEventsArray(Event[] eventsArray) {
-        this.eventsArray = eventsArray;
+    public Event[] getEvents() {
+        return events;
+    }
+
+    public void setEvents(Event[] events) {
+        this.events = events;
     }
 }

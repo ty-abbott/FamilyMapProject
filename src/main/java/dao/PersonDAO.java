@@ -2,10 +2,8 @@ package dao;
 
 import models.Person;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * this class interacts with the person table of the database.
@@ -40,13 +38,61 @@ public class PersonDAO {
             throw new DataAccessException("Error encountered while inserting a person into the database");
         }}
 
+    public Person findByUser(String personID, String userName) throws DataAccessException{
+        Person person;
+        ResultSet rs;
+        String sql = "SELECT * FROM Person WHERE personID = ? AND associatedUsername = ?;";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, personID);
+            stmt.setString(2, userName);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                person = new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("fatherID"), rs.getString("motherID"), rs.getString("SpoudeID"));
+                return person;
+            }else{
+                return null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new DataAccessException("Error getting the person based on user");
+        }
+    }
+
+    public ArrayList<Person> findFamily(String username) throws DataAccessException, SQLException {
+        ArrayList <Person> people = new ArrayList<>();
+        Person person;
+        ResultSet rs;
+        String sql = "SELECT * FROM Person WHERE associatedUsername = ?;";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                person = new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                            rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                            rs.getString("fatherID"), rs.getString("motherID"), rs.getString("SpoudeID"));
+                people.add(person);
+            }
+
+            if(people.isEmpty()){
+                return null;
+            }
+            return people;
+        } catch(SQLException e){
+            e.printStackTrace();
+            throw new DataAccessException("Error: finding people caused an error");
+        }
+    }
+
 
     /**
      * this looks for and reads a specific family member.
      * @param personID - the information that will be used to find the specific person.
      * @return - returns the model of the person found. returns null if not found.
      */
-    public Person find(String personID)throws DataAccessException{Person person;
+    public Person find(String personID)throws DataAccessException{
+        Person person;
         ResultSet rs;
         String sql = "SELECT * FROM Person WHERE personID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

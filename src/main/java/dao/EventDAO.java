@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * this class is used to interact with the event table of the database
@@ -75,19 +76,65 @@ public class EventDAO{
         }
     }
 
+
     /**
      * returns all the events of all the family members of a person.
      *
-     * @param body - contains the data that will be used to get the events of the family members.
+     * @param username - contains the data that will be used to get the events of the family members.
      * @return - returns an array of models of the events. If it doesnt work then return null.
      */
-    public Event[] findAll(Event body) {return null;}
+    public ArrayList<Event> findAll(String username) throws SQLException, DataAccessException {
+        ArrayList <Event> events = new ArrayList<>();
+        Event event;
+        ResultSet rs;
+        String sql = "SELECT * FROM Events WHERE AssociatedUsername = ?;";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                event = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                        rs.getInt("Year"));
+                events.add(event);
+            }
+
+            if(events.isEmpty()){
+                return null;
+            }
+            return events;
+        } catch(SQLException e){
+            e.printStackTrace();
+            throw new DataAccessException("Error: finding the events caused an error");
+        }
+    }
 
     /**
      * deletes the table of events from the database.
      *
      * @return - true if it works, false if it doesn't.
      */
+
+    public Event findByUser(String eventID, String username) throws DataAccessException {
+        Event event;
+        ResultSet rs;
+        String sql = "SELECT * FROM Events WHERE EventID = ? AND AssociatedUsername = ?;";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, eventID);
+            stmt.setString(2, username);
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                event = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"), rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"), rs.getString("Country"), rs.getString("City"), rs.getString("EventType"), rs.getInt("Year"));
+                return event;
+            } else{
+                return null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new DataAccessException("Error: there was an error getting the event from the database");
+        }
+
+    }
     public void clear() throws DataAccessException{
         String sql = "DELETE FROM Events";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

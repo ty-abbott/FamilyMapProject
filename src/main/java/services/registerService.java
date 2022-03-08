@@ -2,7 +2,7 @@ package services;
 
 import dao.*;
 import helpers.GenerateData;
-import helpers.authToken;
+import helpers.AuthTokenHelper;
 import helpers.GenerateID;
 import helpers.loadJSON;
 import models.*;
@@ -30,7 +30,7 @@ public class registerService {
         Connection conn = db.getConnection();
         UserDAO userDAO = new UserDAO(conn);
         AuthTokenDAO authDao = new AuthTokenDAO(conn);
-        authToken token = new authToken();
+        AuthTokenHelper token = new AuthTokenHelper();
         GenerateID idObj = new GenerateID();
         loadJSON location = new loadJSON();
         location.load();

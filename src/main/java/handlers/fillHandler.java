@@ -41,6 +41,9 @@ public class fillHandler implements HttpHandler {
                 gson.toJson(resp, respData);
                 respData.close();
             }
+            else {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            }
         }catch(Exception e){
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();

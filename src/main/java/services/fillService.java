@@ -53,25 +53,32 @@ public class fillService {
         User user;
 
         user = uDAO.find(username);
+        //if there is no user we respond with this error
         if(user == null) {
             defaultResponse resp = new defaultResponse("Error: there is no user in the database with this username.",false);
+            db.closeConnection(false);
             return resp;
         }
 
         else{
+            //deletes associated people and events from the database
             pDAO.deletePerson(username);
             eDAO.clearEvents(username);
+            //create the person for the user and birth event and insert it into the database.
             Person person = new Person(idObj.getID(),user.getUsername(), user.getFirstname(), user.getLastname(),
                     user.getGender());
             Event birthEvent = new Event(idObj.getID(), username, person.getPersonID(), area.getLatitude(), area.getLongitude()
             , area.getCountry(), area.getCity(), "Birth", 1997);
             eDAO.insert(birthEvent);
+            db.closeConnection(true);
             try {
+                System.out.println("going to create the data for fill");
                 GenerateData generate = new GenerateData();
                 generate.generatePerson(person, generations, 1997);
-                double numGen = Math.pow(2, 4);
+                double numGen = Math.pow(2, generations);
                 int numEvents = (int) (numGen*3-2);
-                defaultResponse resp = new defaultResponse("Successfullly added " + numGen + " and " + numEvents + " events to the database", true)
+                defaultResponse resp = new defaultResponse("Successfullly added " + numGen + " people and " + numEvents + " events to the database", true);
+                return resp;
             }catch(DataAccessException | FileNotFoundException e){
                 e.printStackTrace();
                 defaultResponse resp = new defaultResponse("There was a problem generating data", false);

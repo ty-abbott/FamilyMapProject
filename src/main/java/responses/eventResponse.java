@@ -7,15 +7,14 @@ public class eventResponse {
     private String associatedUsername;
     private String eventID;
     private String personID;
-    private float latitude;
-    private float longitude;
     private String country;
     private String city;
     private String eventType;
-    private int year;
     private boolean success;
     private String message;
-
+    private Integer year;
+    private Float latitude;
+    private Float longitude;
     /**
      * returns information on a specific event. This constructor is called if the service worked
      * @param associatedUsername - username that is associated with the event
@@ -48,7 +47,7 @@ public class eventResponse {
      * @param success -  a bool for whether or not there was an error.
      * @param message - a message whether there was success or not. If there was an error then a error message is included.
      */
-    public eventResponse(boolean success, String message) {
+    public eventResponse(String message, boolean success) {
         this.success = success;
         this.message = message;
     }
