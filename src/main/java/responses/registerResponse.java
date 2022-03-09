@@ -5,10 +5,10 @@ import services.registerService;
  * response of the information given when the person registers in the database with the app.
  */
 public class registerResponse {
-    private String authToken;
+    private String authtoken;
     private String username;
     private String personID;
-    private Boolean success;
+    private boolean success;
     private String message;
 
     /**
@@ -19,7 +19,7 @@ public class registerResponse {
      * @param success - boolean success - the boolean that states whether or not there was success
      */
     public registerResponse(String authToken, String username, String personID, boolean success) {
-        this.authToken = authToken;
+        this.authtoken = authToken;
         this.username = username;
         this.personID = personID;
         this.success = success;
@@ -45,11 +45,11 @@ public class registerResponse {
     }
 
     public String getAuthtoken() {
-        return authToken;
+        return authtoken;
     }
 
     public void setAuthtoken(String authtoken) {
-        this.authToken = authtoken;
+        this.authtoken = authtoken;
     }
 
     public String getUsername() {

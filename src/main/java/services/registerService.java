@@ -38,9 +38,9 @@ public class registerService {
         User user;
 
         try{
-
+            String personID = idObj.getID();
              user = new User(body.getUsername(), body.getPassword(), body.getEmail(), body.getFirstName(), body.getLastName(),
-                    body.getGender(), idObj.getID());
+                    body.getGender(), personID);
 
 
         }catch(DataAccessException e){
@@ -59,9 +59,8 @@ public class registerService {
         user2 = userDAO.find(user.getUsername());
         if(Objects.equals(user2.getUsername(), user.getUsername())){
 
-            String id = idObj.getID();
-            Person person = new Person(id, user2.getUsername(), user2.getFirstname(), user2.getLastname(), user2.getGender());
-            Event birthEvent = new Event(idObj.getID(), user2.getUsername(), id, area.getLatitude(), area.getLongitude(),
+            Person person = new Person(user2.getPersonID(), user2.getUsername(), user2.getFirstName(), user2.getLastName(), user2.getGender());
+            Event birthEvent = new Event(idObj.getID(), user2.getUsername(), user2.getPersonID(), area.getLatitude(), area.getLongitude(),
                     area.getCountry(), area.getCity(), "Birth", 1997);
             EventDAO event = new EventDAO(conn);
             event.insert(birthEvent);

@@ -22,6 +22,18 @@ public class loadService {
         EventDAO eDAO = new EventDAO(conn);
         PersonDAO pDAO = new PersonDAO(conn);
         UserDAO uDAO = new UserDAO(conn);
+
+        for (User user : body.getUsers()){
+            if (user.getUsername() == null|| user.getPassword() == null || user.getEmail() == null || user.getFirstName() == null ||
+                    user.getLastName() == null || user.getGender()==null||user.getPersonID() == null){
+                defaultResponse resp = new defaultResponse("Error:there was a value missing in a users object", false);
+                return resp;
+            }
+            else{
+                uDAO.insert(user);
+            }
+        }
+
         Event[] events = body.getEvents();
         for (Event event : events) {
             if (event.getEventID() == null || event.getAssociatedUsername() == null || event.getPersonID() == null||
@@ -37,7 +49,7 @@ public class loadService {
 
         for (Person person : body.getPersons()){
             if(person.getPersonID() == null || person.getAssociatedUsername() == null || person.getFirstName() == null || person.getLastName() == null ||
-            person.getGender() == null || person.getFatherID() == null || person.getMotherID() == null || person.getSpouseID() == null){
+            person.getGender() == null){
                 defaultResponse resp = new defaultResponse("Error: there was a missing field in a Person object", false);
                 return resp;
             }
@@ -46,19 +58,10 @@ public class loadService {
             }
         }
 
-        for (User user : body.getUsers()){
-            if (user.getUsername() == null|| user.getPassword() == null || user.getEmail() == null || user.getFirstname() == null ||
-            user.getLastname() == null || user.getGender()==null||user.getPersonID() == null){
-                defaultResponse resp = new defaultResponse("Error:there was a value missing in a users object", false);
-                return resp;
-            }
-            else{
-                uDAO.insert(user);
-            }
-        }
+        db.closeConnection(true);
         int numUsers = body.getUsers().length;
         int numPersons = body.getPersons().length;
         int numEvents = body.getEvents().length;
-        return new defaultResponse("Successfully added " + numUsers + " Users, " + numPersons + " persons, and " + numEvents + " events to the database.", true);
+        return new defaultResponse("Successfully added " + numUsers + " users, " + numPersons + " persons, and " + numEvents + " events to the database.", true);
     }
 }

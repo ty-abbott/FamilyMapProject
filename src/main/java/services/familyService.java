@@ -43,6 +43,7 @@ public class familyService {
             return resp;
         }
         retArray = people.toArray(new Person[0]);
+        System.out.println(retArray.length);
         familyResponse resp = new familyResponse(retArray, true);
         return resp;
     }

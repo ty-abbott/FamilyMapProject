@@ -21,9 +21,9 @@ public class Person {
     private String firstName;
     private String lastName;
     private String gender;
-    private String spouseID=null;
     private String fatherID=null;
     private String motherID=null;
+    private String spouseID=null;
 
     public Person(String personID, String associatedUsername, String firstName, String lasName, String gender,
                   String fatherID, String motherID, String spouseID) {

@@ -7,7 +7,7 @@ import models.Person;
  * the response object of getting all the family information for a person or user.
  */
 public class familyResponse {
-    private Person[] family;
+    private Person[] data;
     private String message;
     private boolean success;
 
@@ -17,7 +17,7 @@ public class familyResponse {
      * @param success - success - bool on whether it worked or not
      */
     public familyResponse(Person[] family, boolean success) {
-        this.family = family;
+        this.data = family;
         this.success = success;
     }
 
@@ -31,12 +31,12 @@ public class familyResponse {
         this.success = success;
     }
 
-    public Person[] getFamily() {
-        return family;
+    public Person[] getData() {
+        return data;
     }
 
-    public void setFamily(Person[] family) {
-        this.family = family;
+    public void setData(Person[] data) {
+        this.data = data;
     }
 
     public String getMessage() {

@@ -26,7 +26,12 @@ public class singlePersonHandler implements HttpHandler {
                 String fields = exchange.getRequestURI().toString();
                 String[] data = fields.split("/");
                 personResponse resp = service.personInfo(authToken, data[2]);
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                if(resp.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else{
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();

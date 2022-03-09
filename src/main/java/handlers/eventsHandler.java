@@ -25,7 +25,12 @@ public class eventsHandler implements HttpHandler {
                 if(reqHeaders.containsKey("Authorization")){
                     String authToken = reqHeaders.getFirst("Authorization");
                     eventAllResponse resp = service.getEventAll(authToken);
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    if(resp.isSuccess()) {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    }
+                    else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                    }
                     Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                     gson.toJson(resp, respData);
                     respData.close();

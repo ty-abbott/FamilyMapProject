@@ -23,7 +23,12 @@ public class registerHandler implements HttpHandler {
                 registerRequest req = (registerRequest) gson.fromJson(reqBody, registerRequest.class);
                 registerService service = new registerService();
                 registerResponse resp = service.createAccount(req);
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                if(resp.getSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else{
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                }
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();

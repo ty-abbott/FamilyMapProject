@@ -30,8 +30,8 @@ public class UserDAO {
             stmt.setString(1, body.getUsername());
             stmt.setString(2, body.getPassword());
             stmt.setString(3, body.getEmail());
-            stmt.setString(4, body.getFirstname());
-            stmt.setString(5, body.getLastname());
+            stmt.setString(4, body.getFirstName());
+            stmt.setString(5, body.getLastName());
             stmt.setString(6, body.getGender());
             stmt.setString(7, body.getPersonID());
 

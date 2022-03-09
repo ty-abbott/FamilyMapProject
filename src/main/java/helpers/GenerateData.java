@@ -52,7 +52,7 @@ public class GenerateData {
         Event fatherBirthEvent = new Event(fatherEventID, person.getAssociatedUsername(), fatherID, areaData.getLatitude(),
                 areaData.getLongitude(), areaData.getCountry(), areaData.getCity(), "Birth", baseYear);
 
-        //TODO: add to database in event table
+
 //generate child
         String motherMarriageID = id.getID();
         String fatherMarriageID = id.getID();
@@ -69,7 +69,7 @@ public class GenerateData {
                 areaData.getLongitude(), areaData.getCountry(), areaData.getCity(), "Death", baseYear+40);
         Event fatherDeathEvent = new Event(fatherDeathID, person.getAssociatedUsername(), fatherID, areaData.getLatitude(),
                 areaData.getLongitude(), areaData.getCountry(), areaData.getCity(), "Death", baseYear+40);
-        //TODO:figure out when to put into database.
+
 
         conn = db.getConnection();
         EventDAO eventObj = new EventDAO(conn);

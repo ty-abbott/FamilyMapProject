@@ -38,12 +38,14 @@ public class loginService {
         }
         else{
             User user = uDao.find(body.getUsername());
-            db.closeConnection(false);
+
             if(user == null){
+                db.closeConnection(false);
                 loginResponse resp = new loginResponse("Error: there is no user in the database with this username", false);
                 return resp;
             }
             if(!Objects.equals(user.getPassword(), body.getPassword())){
+                db.closeConnection(false);
                 loginResponse resp = new loginResponse("Error: the passwords do not match", false);
                 return resp;
             }

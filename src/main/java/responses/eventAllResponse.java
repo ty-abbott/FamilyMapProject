@@ -5,7 +5,7 @@ import models.Event;
  * a response class for getting all the events of a users family members
  */
 public class eventAllResponse {
-    private Event[] eventArray;
+    private Event[] data;
     private boolean success;
     private String message;
 
@@ -16,7 +16,7 @@ public class eventAllResponse {
      */
 
     public eventAllResponse(Event[] eventArray, boolean success) {
-        this.eventArray = eventArray;
+        this.data = eventArray;
         this.success = success;
     }
 
@@ -30,12 +30,12 @@ public class eventAllResponse {
         this.message = message;
     }
 
-    public Event[] getEventArray() {
-        return eventArray;
+    public Event[] getData() {
+        return data;
     }
 
-    public void setEventArray(Event[] eventArray) {
-        this.eventArray = eventArray;
+    public void setData(Event[] data) {
+        this.data = data;
     }
 
     public boolean isSuccess() {

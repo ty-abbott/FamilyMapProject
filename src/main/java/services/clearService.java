@@ -40,6 +40,6 @@ public class clearService {
             return resp;
         }
 
-        return new defaultResponse("Clear succeeded", true);
+        return new defaultResponse("Clear succeeded.", true);
     }
 }
