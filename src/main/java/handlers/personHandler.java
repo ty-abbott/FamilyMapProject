@@ -4,27 +4,27 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import responses.familyResponse;
-import services.familyService;
+import responses.FamilyResponse;
+import services.FamilyService;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class personHandler implements HttpHandler {
+public class PersonHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
     System.out.println("We are in the people handler");
     Gson gson = new Gson();
-    familyService service = new familyService();
+    FamilyService service = new FamilyService();
 
     try{
         if(exchange.getRequestMethod().toUpperCase().equals("GET")){
             Headers reqHeaders = exchange.getRequestHeaders();
             if(reqHeaders.containsKey("Authorization")){
                 String authToken = reqHeaders.getFirst("Authorization");
-                familyResponse resp = service.getFamily(authToken);
+                FamilyResponse resp = service.getFamily(authToken);
                 if(resp.isSuccess()) {
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 }

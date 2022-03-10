@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.Random;
 
 public class GenerateData {
-    private final loadJSON familyData = new loadJSON();
+    private final LoadJSON familyData = new LoadJSON();
     private final GenerateID id = new GenerateID();
     private final int LOC_RANDOM = 100;
     private final int NAME_RANDOM = 143;
@@ -27,15 +27,15 @@ public class GenerateData {
         String motherID = id.getID();
         String fatherID = id.getID();
         String surname = familyData.surnames.getData()[NAME_RANDOM];
-        person.setMotherID(motherID);
-        person.setFatherID(fatherID);
+        if(generations > 0) {
+            person.setMotherID(motherID);
+            person.setFatherID(fatherID);
+        }
         baseYear = baseYear - 20;
 
-        if(person.getMotherID()!=null && person.getFatherID()!=null){
-            PersonDAO personObj = new PersonDAO(conn);
-            personObj.insert(person);
-            db.closeConnection(true);
-        }
+        PersonDAO personObj = new PersonDAO(conn);
+        personObj.insert(person);
+        db.closeConnection(true);
         Person mother = new Person(motherID, person.getAssociatedUsername(), familyData.femaleNames.getData()[random.nextInt(NAME_RANDOM)],
                 surname, "female");
         Person father = new Person(fatherID, person.getAssociatedUsername(), familyData.maleNames.getData()[random.nextInt(NAME_RANDOM)],
@@ -53,7 +53,7 @@ public class GenerateData {
                 areaData.getLongitude(), areaData.getCountry(), areaData.getCity(), "Birth", baseYear);
 
 
-//generate child
+
         String motherMarriageID = id.getID();
         String fatherMarriageID = id.getID();
 

@@ -4,27 +4,27 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import responses.eventAllResponse;
-import services.eventAllService;
+import responses.EventAllResponse;
+import services.EventAllService;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class eventsHandler implements HttpHandler {
+public class EventsHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("We are in the events handler");
         Gson gson = new Gson();
-        eventAllService service = new eventAllService();
+        EventAllService service = new EventAllService();
 
         try{
             if(exchange.getRequestMethod().toUpperCase().equals("GET")){
                 Headers reqHeaders = exchange.getRequestHeaders();
                 if(reqHeaders.containsKey("Authorization")){
                     String authToken = reqHeaders.getFirst("Authorization");
-                    eventAllResponse resp = service.getEventAll(authToken);
+                    EventAllResponse resp = service.getEventAll(authToken);
                     if(resp.isSuccess()) {
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                     }

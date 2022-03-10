@@ -4,7 +4,7 @@ package requests;
  * request class for login functionality.
 
  */
-public class loginRequest {
+public class LoginRequest {
     /**
      * username - username being passed in
      * password - password being passed in
@@ -12,7 +12,7 @@ public class loginRequest {
     private String username;
     private String password;
 
-    public loginRequest(){
+    public LoginRequest(){
 
     }
 

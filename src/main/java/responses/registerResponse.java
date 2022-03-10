@@ -1,10 +1,10 @@
 package responses;
-import services.registerService;
+import services.RegisterService;
 
 /**
  * response of the information given when the person registers in the database with the app.
  */
-public class registerResponse {
+public class RegisterResponse {
     private String authtoken;
     private String username;
     private String personID;
@@ -18,7 +18,7 @@ public class registerResponse {
      * @param personID - String personID - the ID of the person
      * @param success - boolean success - the boolean that states whether or not there was success
      */
-    public registerResponse(String authToken, String username, String personID, boolean success) {
+    public RegisterResponse(String authToken, String username, String personID, boolean success) {
         this.authtoken = authToken;
         this.username = username;
         this.personID = personID;
@@ -31,7 +31,7 @@ public class registerResponse {
      * @param success - @param success - boolean success - the boolean that states whether or not there was success
      */
 
-    public registerResponse(String message, Boolean success) {
+    public RegisterResponse(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -76,11 +76,11 @@ public class registerResponse {
         this.success = success;
     }
 
-    public registerResponse allValues(registerService body) {
+    public RegisterResponse allValues(RegisterService body) {
         return this;
     }
 
-    public registerResponse errorMessage(registerService body) {
+    public RegisterResponse errorMessage(RegisterService body) {
         return this;
     }
 }

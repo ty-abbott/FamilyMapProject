@@ -3,7 +3,7 @@ package requests;
 /**
  * request class for the register service class
  */
-public class registerRequest {
+public class RegisterRequest {
     /**
      * String username - username for the user that is passed in
      * String password - password for the user
@@ -19,7 +19,7 @@ public class registerRequest {
     private String lastName;
     private String gender;
 
-    public registerRequest(){}
+    public RegisterRequest(){}
 
     public String getUsername() {
         return username;

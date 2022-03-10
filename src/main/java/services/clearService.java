@@ -1,7 +1,6 @@
 package services;
 
-import models.Person;
-import responses.defaultResponse;
+import responses.DefaultResponse;
 import dao.*;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.Connection;
  * message that states whether or not the service worked
  * success - boolean of whether or not there was success
  */
-public class clearService {
+public class ClearService {
     private String message;
     private boolean success;
     Database db = new Database();
@@ -20,7 +19,7 @@ public class clearService {
      * clears the whole database.
      * @return a response on whether or not the service worked.
      */
-    public defaultResponse clearDB() throws DataAccessException {
+    public DefaultResponse clearDB() throws DataAccessException {
         Connection conn = db.getConnection();
         AuthTokenDAO aDAO = new AuthTokenDAO(conn);
         EventDAO eDAO = new EventDAO(conn);
@@ -35,11 +34,11 @@ public class clearService {
             db.closeConnection(true);
         } catch (DataAccessException e) {
             db.closeConnection(false);
-            defaultResponse resp = new defaultResponse("Error: There was a problem clearing from the database", false);
+            DefaultResponse resp = new DefaultResponse("Error: There was a problem clearing from the database", false);
             e.printStackTrace();
             return resp;
         }
 
-        return new defaultResponse("Clear succeeded.", true);
+        return new DefaultResponse("Clear succeeded.", true);
     }
 }

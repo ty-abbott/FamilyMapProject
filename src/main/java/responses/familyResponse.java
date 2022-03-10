@@ -6,7 +6,7 @@ import models.Person;
 /**
  * the response object of getting all the family information for a person or user.
  */
-public class familyResponse {
+public class FamilyResponse {
     private Person[] data;
     private String message;
     private boolean success;
@@ -16,7 +16,7 @@ public class familyResponse {
      * @param family - family - an array of people that represents all the generations of the person
      * @param success - success - bool on whether it worked or not
      */
-    public familyResponse(Person[] family, boolean success) {
+    public FamilyResponse(Person[] family, boolean success) {
         this.data = family;
         this.success = success;
     }
@@ -26,7 +26,7 @@ public class familyResponse {
      * @param message - message - message of success or error
      * @param success - success - bool on whether it worked or not
      */
-    public familyResponse(String message, boolean success) {
+    public FamilyResponse(String message, boolean success) {
         this.message = message;
         this.success = success;
     }

@@ -4,7 +4,7 @@ import dao.*;
 import helpers.GenerateData;
 import helpers.AuthTokenHelper;
 import helpers.GenerateID;
-import helpers.loadJSON;
+import helpers.LoadJSON;
 import models.*;
 import responses.*;
 import requests.*;
@@ -17,13 +17,13 @@ import java.util.Random;
 /**
  * This class is used to register the user with the application.
  */
-public class registerService {
+public class RegisterService {
 
     /**
      * main method of the class that creates the account for the application and saves it in the database under the user table.
      * @return returns a registerResponse object. It will be different based upon whether or not register worked.
      */
-    public registerResponse createAccount(registerRequest body) throws DataAccessException, FileNotFoundException {
+    public RegisterResponse createAccount(RegisterRequest body) throws DataAccessException, FileNotFoundException {
 
         Database db = new Database();
         Random random = new Random();
@@ -32,7 +32,7 @@ public class registerService {
         AuthTokenDAO authDao = new AuthTokenDAO(conn);
         AuthTokenHelper token = new AuthTokenHelper();
         GenerateID idObj = new GenerateID();
-        loadJSON location = new loadJSON();
+        LoadJSON location = new LoadJSON();
         location.load();
         Location area = location.locData.getData()[random.nextInt(100)];
         User user;
@@ -44,13 +44,13 @@ public class registerService {
 
 
         }catch(DataAccessException e){
-            registerResponse resp = new registerResponse("Error: There were not enough paramters to create the user", false);
+            RegisterResponse resp = new RegisterResponse("Error: There were not enough paramters to create the user", false);
             return resp;
         }
         System.out.println(user.getUsername());
         User user2 = userDAO.find(user.getUsername());
         if(user2 != null){
-            registerResponse resp = new registerResponse("Error: there is a user already in the database with this information", false);
+            RegisterResponse resp = new RegisterResponse("Error: there is a user already in the database with this information", false);
             db.closeConnection(true);
             return resp;
         }
@@ -71,11 +71,11 @@ public class registerService {
             GenerateData family = new GenerateData();
 
             family.generatePerson(person, 4, 1997);
-            registerResponse resp = new registerResponse(auth, user2.getUsername(), user2.getPersonID(), true);
+            RegisterResponse resp = new RegisterResponse(auth, user2.getUsername(), user2.getPersonID(), true);
             return resp;
         }
 
-        registerResponse resp = new registerResponse("Error: There was an internal error with the server", false);
+        RegisterResponse resp = new RegisterResponse("Error: There was an internal error with the server", false);
         return resp;
 
     }

@@ -1,18 +1,17 @@
 package handlers;
 import dao.DataAccessException;
-import requests.loginRequest;
-import services.loginService;
-import responses.loginResponse;
+import requests.LoginRequest;
+import services.LoginService;
+import responses.LoginResponse;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 
 import com.google.gson.*;
 
-public class loginHandler implements HttpHandler {
+public class LoginHandler implements HttpHandler {
     Gson gson = new Gson();
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -20,9 +19,9 @@ public class loginHandler implements HttpHandler {
     try{
         if(exchange.getRequestMethod().toUpperCase().equals("POST")){
             Reader reqBody = new InputStreamReader(exchange.getRequestBody());
-            loginRequest req = (loginRequest) gson.fromJson(reqBody, loginRequest.class);//might have to change this to
-            loginService service = new loginService();
-            loginResponse resp = service.login(req);
+            LoginRequest req = (LoginRequest) gson.fromJson(reqBody, LoginRequest.class);//might have to change this to
+            LoginService service = new LoginService();
+            LoginResponse resp = service.login(req);
             if(!resp.isSuccess()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }

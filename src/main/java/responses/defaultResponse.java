@@ -9,11 +9,11 @@ package responses;
  * String message - the message for the response. If the service was successful then it returns a message saying so.
  *  If the service was not successful then an error message is included with a related error.
  */
-public class defaultResponse {
+public class DefaultResponse {
     private String message;
     private boolean success;
 
-    public defaultResponse(String message, boolean success){
+    public DefaultResponse(String message, boolean success){
         this.message = message;
         this.success = success;
     }

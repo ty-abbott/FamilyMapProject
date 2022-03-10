@@ -8,11 +8,11 @@ import java.net.HttpURLConnection;
 
 import com.google.gson.*;
 import dao.DataAccessException;
-import requests.registerRequest;
-import services.registerService;
-import responses.registerResponse;
+import requests.RegisterRequest;
+import services.RegisterService;
+import responses.RegisterResponse;
 
-public class registerHandler implements HttpHandler {
+public class RegisterHandler implements HttpHandler {
     Gson gson = new Gson();
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -20,9 +20,9 @@ public class registerHandler implements HttpHandler {
         try{
             if(exchange.getRequestMethod().toUpperCase().equals("POST")){
                 Reader reqBody = new InputStreamReader(exchange.getRequestBody());
-                registerRequest req = (registerRequest) gson.fromJson(reqBody, registerRequest.class);
-                registerService service = new registerService();
-                registerResponse resp = service.createAccount(req);
+                RegisterRequest req = (RegisterRequest) gson.fromJson(reqBody, RegisterRequest.class);
+                RegisterService service = new RegisterService();
+                RegisterResponse resp = service.createAccount(req);
                 if(resp.getSuccess()) {
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 }

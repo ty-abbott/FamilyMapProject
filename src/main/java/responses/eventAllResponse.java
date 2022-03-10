@@ -4,7 +4,7 @@ import models.Event;
 /**
  * a response class for getting all the events of a users family members
  */
-public class eventAllResponse {
+public class EventAllResponse {
     private Event[] data;
     private boolean success;
     private String message;
@@ -15,7 +15,7 @@ public class eventAllResponse {
      * @param success - success - whether or not there was an error
      */
 
-    public eventAllResponse(Event[] eventArray, boolean success) {
+    public EventAllResponse(Event[] eventArray, boolean success) {
         this.data = eventArray;
         this.success = success;
     }
@@ -25,7 +25,7 @@ public class eventAllResponse {
      * @param success - success - whether or not there was an error
      * @param message - message - either a message that it worked or the error message.
      */
-    public eventAllResponse(boolean success, String message) {
+    public EventAllResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }

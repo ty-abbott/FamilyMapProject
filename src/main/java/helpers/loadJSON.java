@@ -9,7 +9,7 @@ import java.io.Reader;
 import com.google.gson.*;
 
 
-public class loadJSON {
+public class LoadJSON {
     Gson gson = new Gson();
     public LocationData locData;
     public NameData femaleNames;

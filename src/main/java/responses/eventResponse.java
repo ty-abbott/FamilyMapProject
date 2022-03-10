@@ -3,7 +3,7 @@ package responses;
 /**
  * a response class for the event service
  */
-public class eventResponse {
+public class EventResponse {
     private String associatedUsername;
     private String eventID;
     private String personID;
@@ -28,7 +28,7 @@ public class eventResponse {
      * @param year - year of event
      * @param success - whether or not there was an error.
      */
-    public eventResponse(String associatedUsername, String eventID, String personID, float latitude, float longitude,
+    public EventResponse(String associatedUsername, String eventID, String personID, float latitude, float longitude,
                          String country, String city, String eventType, int year, boolean success) {
         this.associatedUsername = associatedUsername;
         this.eventID = eventID;
@@ -47,7 +47,7 @@ public class eventResponse {
      * @param success -  a bool for whether or not there was an error.
      * @param message - a message whether there was success or not. If there was an error then a error message is included.
      */
-    public eventResponse(String message, boolean success) {
+    public EventResponse(String message, boolean success) {
         this.success = success;
         this.message = message;
     }

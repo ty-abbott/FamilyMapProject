@@ -2,8 +2,8 @@ package services;
 
 import dao.AuthTokenDAO;
 import dao.DataAccessException;
-import requests.loginRequest;
-import responses.loginResponse;
+import requests.LoginRequest;
+import responses.LoginResponse;
 import dao.UserDAO;
 import dao.Database;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import models.AuthToken;
 /**
  * a service class to help login the user to the application
  */
-public class loginService {
+public class LoginService {
 
 
     /**
@@ -24,7 +24,7 @@ public class loginService {
      * @param body contains username and password
      * @return response of whether or not the service worked.
      */
-    public loginResponse login(loginRequest body) throws DataAccessException {
+    public LoginResponse login(LoginRequest body) throws DataAccessException {
         Database db = new Database();
         Connection conn = db.getConnection();
         UserDAO uDao = new UserDAO(conn);
@@ -33,7 +33,7 @@ public class loginService {
 
 
         if(body.getUsername() == null || body.getPassword() == null) {
-            loginResponse resp = new loginResponse("Error: there was no username or password password provided", false);
+            LoginResponse resp = new LoginResponse("Error: there was no username or password password provided", false);
             return resp;
         }
         else{
@@ -41,19 +41,19 @@ public class loginService {
 
             if(user == null){
                 db.closeConnection(false);
-                loginResponse resp = new loginResponse("Error: there is no user in the database with this username", false);
+                LoginResponse resp = new LoginResponse("Error: there is no user in the database with this username", false);
                 return resp;
             }
             if(!Objects.equals(user.getPassword(), body.getPassword())){
                 db.closeConnection(false);
-                loginResponse resp = new loginResponse("Error: the passwords do not match", false);
+                LoginResponse resp = new LoginResponse("Error: the passwords do not match", false);
                 return resp;
             }
             String auth = authtoken.getAuthToken();
             AuthToken tokenModel = new AuthToken(auth, user.getUsername());
             authDao.insert(tokenModel);
             db.closeConnection(true);
-            loginResponse resp = new loginResponse(auth, user.getUsername(), user.getPersonID(), true);
+            LoginResponse resp = new LoginResponse(auth, user.getUsername(), user.getPersonID(), true);
             return resp;
         }
     }

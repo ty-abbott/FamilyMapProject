@@ -8,7 +8,7 @@ import models.User;
  * request class for the load functionality
 
  */
-public class loadRequest {
+public class LoadRequest {
     /**
      * userArray - an array of users
      * person[] - array of people
@@ -18,7 +18,7 @@ public class loadRequest {
     private Person[] persons;
     private Event[] events;
 
-    loadRequest(){
+    LoadRequest(){
 
     }
 

@@ -4,22 +4,22 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.DataAccessException;
-import responses.defaultResponse;
-import services.clearService;
+import responses.DefaultResponse;
+import services.ClearService;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class clearHandler implements HttpHandler {
+public class ClearHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
     try{
         if(exchange.getRequestMethod().toUpperCase().equals("POST")) {
-            clearService clear = new clearService();
-            defaultResponse resp = clear.clearDB();
+            ClearService clear = new ClearService();
+            DefaultResponse resp = clear.clearDB();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             Writer respData = new OutputStreamWriter(exchange.getResponseBody());
             gson.toJson(resp, respData);

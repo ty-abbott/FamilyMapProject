@@ -4,21 +4,20 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.DataAccessException;
-import responses.eventResponse;
-import services.eventService;
+import responses.EventResponse;
+import services.EventService;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class singleEventHandler implements HttpHandler {
+public class SingleEventHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
     System.out.println("We are in the single event handler");
     Gson gson = new Gson();
-    eventService service = new eventService();
+    EventService service = new EventService();
 
     try{
         if(exchange.getRequestMethod().toUpperCase().equals("GET")){
@@ -27,7 +26,7 @@ public class singleEventHandler implements HttpHandler {
                 String authToken = reqHeaders.getFirst("Authorization");
                 String fields = exchange.getRequestURI().toString();
                 String[] data = fields.split("/");
-                eventResponse resp = service.getEvent(authToken, data[2]);
+                EventResponse resp = service.getEvent(authToken, data[2]);
                 if(resp.isSuccess()){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
                 }

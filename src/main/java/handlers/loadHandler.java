@@ -4,15 +4,14 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.DataAccessException;
-import requests.loadRequest;
-import requests.registerRequest;
-import responses.defaultResponse;
-import services.loadService;
+import requests.LoadRequest;
+import responses.DefaultResponse;
+import services.LoadService;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 
-public class loadHandler implements HttpHandler {
+public class LoadHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
@@ -22,9 +21,9 @@ public class loadHandler implements HttpHandler {
         try{
             if(exchange.getRequestMethod().toUpperCase().equals("POST")){
                 Reader reqBody = new InputStreamReader(exchange.getRequestBody());
-                loadRequest req = (loadRequest) gson.fromJson(reqBody, loadRequest.class);
-                loadService service = new loadService();
-                defaultResponse resp = service.loadData(req);
+                LoadRequest req = (LoadRequest) gson.fromJson(reqBody, LoadRequest.class);
+                LoadService service = new LoadService();
+                DefaultResponse resp = service.loadData(req);
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);

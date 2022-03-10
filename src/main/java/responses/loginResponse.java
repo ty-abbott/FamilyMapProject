@@ -3,7 +3,7 @@ package responses;
 /**
  * return object of basic infomration for the user that just logged in
  */
-public class loginResponse {
+public class LoginResponse {
     private String username;
     private String authtoken;
     private String personID;
@@ -17,7 +17,7 @@ public class loginResponse {
      * @param personID - String personID - the ID of the user that is links people in the database
      * @param success - boolean success - the bool that states that the service worked or not
      */
-    public loginResponse(String authtoken, String username, String personID, boolean success){
+    public LoginResponse(String authtoken, String username, String personID, boolean success){
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
@@ -29,7 +29,7 @@ public class loginResponse {
      * @param message - String message - the message that states if the service worked, if not the error message is included
      * @param success - boolean success - the bool that states that the service worked or not
      */
-    public loginResponse(String message, boolean success){
+    public LoginResponse(String message, boolean success){
         this.message = message;
         this.success = success;
     }

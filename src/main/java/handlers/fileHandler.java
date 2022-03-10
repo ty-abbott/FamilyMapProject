@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.util.Locale;
 import java.util.Objects;
 
-public class fileHandler implements HttpHandler {
+public class FileHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try{

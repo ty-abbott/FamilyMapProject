@@ -3,7 +3,7 @@ package responses;
 /**
  * returns an object representing all the information on a person found in the database.
  */
-public class personResponse {
+public class PersonResponse {
     private String associatedUsername;
     private String personID;
     private String firstName;
@@ -28,7 +28,7 @@ public class personResponse {
      * @param success - boolean success - a boolean that states if the service was successful
      * this constructor is called if the service was a success
      */
-    public personResponse(String associatedUsername, String personID, String firstName, String lastName, String gender,
+    public PersonResponse(String associatedUsername, String personID, String firstName, String lastName, String gender,
                           String fatherName, String motherName, String spouseID, boolean success) {
         this.associatedUsername = associatedUsername;
         this.personID = personID;
@@ -41,7 +41,7 @@ public class personResponse {
         this.success = success;
     }
 
-    public personResponse(String associatedUsername, String personID, String firstName, String lastName, String gender, boolean success) {
+    public PersonResponse(String associatedUsername, String personID, String firstName, String lastName, String gender, boolean success) {
         this.associatedUsername = associatedUsername;
         this.personID = personID;
         this.firstName = firstName;
@@ -55,7 +55,7 @@ public class personResponse {
      * @param success - boolean success - a boolean that states if the service was successful
      * @param message - String message - the message of if the service worked or not. If it did not then the error is included.
      */
-    public personResponse(String message, boolean success ) {
+    public PersonResponse(String message, boolean success ) {
         this.success = success;
         this.message = message;
     }

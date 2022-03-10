@@ -3,19 +3,18 @@ package handlers;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import responses.defaultResponse;
-import services.fillService;
+import responses.DefaultResponse;
+import services.FillService;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
-public class fillHandler implements HttpHandler {
+public class FillHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        fillService service;
+        FillService service;
         Gson gson = new Gson();
         System.out.println("We are in the fill handler");
         try{
@@ -28,14 +27,14 @@ public class fillHandler implements HttpHandler {
                 }
                 System.out.println(data.length);
                 if (data.length>2){
-                    service = new fillService(data[2], Integer.parseInt(data[3]));
+                    service = new FillService(data[2], Integer.parseInt(data[3]));
                 }
 
                 else {
-                    service = new fillService(data[2]);
+                    service = new FillService(data[2]);
                 }
 
-                defaultResponse resp = service.fill();
+                DefaultResponse resp = service.fill();
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
