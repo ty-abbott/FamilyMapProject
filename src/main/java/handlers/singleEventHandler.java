@@ -27,6 +27,7 @@ public class SingleEventHandler implements HttpHandler {
                 String fields = exchange.getRequestURI().toString();
                 String[] data = fields.split("/");
                 EventResponse resp = service.getEvent(authToken, data[2]);
+                //send data to the server
                 if(resp.isSuccess()){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
                 }
@@ -36,6 +37,7 @@ public class SingleEventHandler implements HttpHandler {
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();
+                //return data from the server
             }
             else{
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

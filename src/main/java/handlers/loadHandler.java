@@ -24,10 +24,12 @@ public class LoadHandler implements HttpHandler {
                 LoadRequest req = (LoadRequest) gson.fromJson(reqBody, LoadRequest.class);
                 LoadService service = new LoadService();
                 DefaultResponse resp = service.loadData(req);
+                //send data to the server
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();
+                //return data from the server
             }
             else{
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

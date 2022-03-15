@@ -5,10 +5,13 @@ import dao.Database;
 import dao.EventDAO;
 import models.Event;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,4 +78,113 @@ public class EventDAOTest {
         // instance of the class in the first parameter, which in this case is a DataAccessException.
         assertThrows(DataAccessException.class, () -> eDao.insert(bestEvent));
     }
-}
+
+    @Test
+    public void findSuccess() throws DataAccessException {
+        try {
+            eDao.insert(bestEvent);
+            Event compareTest = eDao.find(bestEvent.getEventID());
+            assertNotNull(compareTest);
+            assertEquals(compareTest.getEventType(), bestEvent.getEventType());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findFail() throws DataAccessException{
+        try{
+            Event compareTest = eDao.find(bestEvent.getEventID());
+            assertNull(compareTest);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findAllSuccess(){
+        try{
+            eDao.insert(bestEvent);
+            eDao.insert(new Event("123", "Gale", "doesnt matter", 2, 3,
+                    "america", "city", "got rich", 2020));
+            ArrayList<Event> events = eDao.findAll(bestEvent.getAssociatedUsername());
+            assertEquals(2, events.size());
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void findAllFail(){
+        try{
+            ArrayList<Event> events = eDao.findAll(bestEvent.getAssociatedUsername());
+            assertNull(events);
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findByUserSuccess(){
+        try{
+            eDao.insert(bestEvent);
+            Event event = eDao.findByUser(bestEvent.getEventID(), bestEvent.getAssociatedUsername());
+            assertEquals(bestEvent.getEventID(), event.getEventID());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void findByUserFailure(){
+        try{
+            Event event = eDao.findByUser(bestEvent.getEventID(), bestEvent.getAssociatedUsername());
+            assertNull(event);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void clearSuccessFull(){
+        try {
+            eDao.insert(bestEvent);
+            assertNotNull(eDao.find(bestEvent.getEventID()));
+            eDao.clear();
+            Event compareTest = eDao.find(bestEvent.getEventID());
+            assertNull(compareTest);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void clearSuccessEmpty() {
+        try {
+            eDao.clear();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void clearEvents(){
+        try{
+            eDao.insert(bestEvent);
+            eDao.clearEvents(bestEvent.getAssociatedUsername());
+            Event compareTest = eDao.findByUser(bestEvent.getEventID(), bestEvent.getAssociatedUsername());
+            assertNull(compareTest);
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void clearEventsEmpty() {
+        try {
+            eDao.clearEvents(bestEvent.getAssociatedUsername());
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    }
+

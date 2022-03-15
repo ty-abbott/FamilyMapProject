@@ -25,6 +25,7 @@ public class PersonHandler implements HttpHandler {
             if(reqHeaders.containsKey("Authorization")){
                 String authToken = reqHeaders.getFirst("Authorization");
                 FamilyResponse resp = service.getFamily(authToken);
+                //sending information to the service
                 if(resp.isSuccess()) {
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 }
@@ -34,7 +35,7 @@ public class PersonHandler implements HttpHandler {
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();
-
+                //return the data from the server
             }
             else{
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

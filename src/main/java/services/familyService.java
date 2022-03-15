@@ -31,21 +31,25 @@ public class FamilyService {
         PersonDAO pDAO = new PersonDAO(conn);
         ArrayList<Person> people = new ArrayList<>();
         Person[] retArray;
-
+        //creating the fields necessary and getting the username
         if(username == null) {
             FamilyResponse resp = new FamilyResponse("Error: there is no username in the database",false);
             return resp;
+            //username does not exist in database and we return that
         }
         people = pDAO.findFamily(username);
         db.closeConnection(false);
+        //loook for and get the people associated with the user
         if(people == null){
             FamilyResponse resp = new FamilyResponse("Error: there was no one in the database for the user", false);
             return resp;
+            //if none were found
         }
         retArray = people.toArray(new Person[0]);
         System.out.println(retArray.length);
         FamilyResponse resp = new FamilyResponse(retArray, true);
         return resp;
+        //returning the family
     }
 }
 

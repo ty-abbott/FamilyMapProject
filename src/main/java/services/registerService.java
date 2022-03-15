@@ -38,9 +38,16 @@ public class RegisterService {
         User user;
 
         try{
+            if(body.getUsername() == null || body.getPassword() == null || body.getEmail() == null ||
+                    body.getFirstName() == null || body.getLastName() == null || body.getGender() == null ){
+                RegisterResponse resp = new RegisterResponse("One of the values was missing", false);
+                return resp;
+                //if any of the information is null return the error
+            }
             String personID = idObj.getID();
              user = new User(body.getUsername(), body.getPassword(), body.getEmail(), body.getFirstName(), body.getLastName(),
                     body.getGender(), personID);
+             //create user object
 
 
         }catch(DataAccessException e){
@@ -49,34 +56,38 @@ public class RegisterService {
         }
         System.out.println(user.getUsername());
         User user2 = userDAO.find(user.getUsername());
+        //if there is a user already in the database.
         if(user2 != null){
             RegisterResponse resp = new RegisterResponse("Error: there is a user already in the database with this information", false);
             db.closeConnection(true);
             return resp;
         }
-
+        //inserting the valid user
         userDAO.insert(user);
         user2 = userDAO.find(user.getUsername());
         if(Objects.equals(user2.getUsername(), user.getUsername())){
-
+            //creating the person object associated with the user
             Person person = new Person(user2.getPersonID(), user2.getUsername(), user2.getFirstName(), user2.getLastName(), user2.getGender());
             Event birthEvent = new Event(idObj.getID(), user2.getUsername(), user2.getPersonID(), area.getLatitude(), area.getLongitude(),
                     area.getCountry(), area.getCity(), "Birth", 1997);
             EventDAO event = new EventDAO(conn);
+            //creating and inserting birth object
             event.insert(birthEvent);
             String auth = token.getAuthToken();
             AuthToken tokenModel = new AuthToken(auth, user.getUsername());
             authDao.insert(tokenModel);
+            //auth token created and inserted into the database
             db.closeConnection(true);
             GenerateData family = new GenerateData();
-
+            //generate family information
             family.generatePerson(person, 4, 1997);
             RegisterResponse resp = new RegisterResponse(auth, user2.getUsername(), user2.getPersonID(), true);
             return resp;
+            //return success
         }
 
         RegisterResponse resp = new RegisterResponse("Error: There was an internal error with the server", false);
         return resp;
-
+        //internal error returned
     }
 }

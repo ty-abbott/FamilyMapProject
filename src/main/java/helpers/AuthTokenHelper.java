@@ -14,12 +14,13 @@ import java.util.UUID;
 public class AuthTokenHelper {
 
     public String getAuthToken() {
-
+        //returning a authtoken with a random string
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
 
     public String checkAuthToken(String authToken) throws DataAccessException {
+        //check if the given authtoken is valid by seeing if there is a user associated with it
         Database db = new Database();
         Connection conn = db.getConnection();
         AuthTokenDAO aDAO = new AuthTokenDAO(conn);

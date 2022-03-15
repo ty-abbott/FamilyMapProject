@@ -73,6 +73,7 @@ public class FillService {
             db.closeConnection(true);
             try {
                 System.out.println("going to create the data for fill");
+                //here we generate the data to put in database. the "family" of the user
                 GenerateData generate = new GenerateData();
                 generate.generatePerson(person, generations, 1997);
                 Double numGen = Math.pow(2, generations + 1) - 1;
@@ -80,6 +81,7 @@ public class FillService {
                 int numEvents = (int) (numGen*3-2);
                 DefaultResponse resp = new DefaultResponse("Successfully added " + integer + " persons and " + numEvents + " events to the database.", true);
                 return resp;
+                //message to state the people created and the events created
             }catch(DataAccessException | FileNotFoundException e){
                 e.printStackTrace();
                 DefaultResponse resp = new DefaultResponse("There was a problem generating data", false);

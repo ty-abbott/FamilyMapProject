@@ -30,22 +30,25 @@ public class EventAllService {
         EventDAO eDAO = new EventDAO(conn);
         ArrayList<Event> events = new ArrayList<>();
         Event[] retArray;
-
+        //data fields that are necessary for functionality
         if(username == null){
             EventAllResponse resp = new EventAllResponse( false, "Error: the authtoken is invalid");
             return resp;
+            //if the username is null then respond with that
         }
-
+        //fill the array list with all the event objects based on the username
         events = eDAO.findAll(username);
         db.closeConnection(false);
         if(events == null){
             EventAllResponse resp = new EventAllResponse(false, "Error: there were not events in the database");
             return resp;
+            //no given events based on the username
         }
         else{
             retArray = events.toArray(new Event[0]);
             EventAllResponse resp = new EventAllResponse(retArray, true);
             return resp;
+            //return the events
         }
     }
 }

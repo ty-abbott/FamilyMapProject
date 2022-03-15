@@ -22,6 +22,7 @@ public class LoginHandler implements HttpHandler {
             LoginRequest req = (LoginRequest) gson.fromJson(reqBody, LoginRequest.class);//might have to change this to
             LoginService service = new LoginService();
             LoginResponse resp = service.login(req);
+            //sending request to the service class
             if(!resp.isSuccess()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
@@ -31,6 +32,7 @@ public class LoginHandler implements HttpHandler {
             Writer respData = new OutputStreamWriter(exchange.getResponseBody());
             gson.toJson(resp, respData);
             respData.close();
+            //return the data from the server
         }
         else{
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

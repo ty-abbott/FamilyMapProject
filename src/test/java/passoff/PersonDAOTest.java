@@ -8,7 +8,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Array;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,6 +99,49 @@ public class PersonDAOTest {
     }
 
     @Test
+    public void findByUserPass(){
+        try{
+            pDao.insert(person);
+            Person compareTest = pDao.findByUser(person.getPersonID(), person.getAssociatedUsername());
+            assertNotNull(compareTest);
+            assertEquals(person.getPersonID(), compareTest.getPersonID());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void findByUserFail() throws DataAccessException {
+        try {
+            Person compareTest = pDao.findByUser(person.getPersonID(), person.getAssociatedUsername());
+            assertNull(compareTest);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findFamilySuccess() throws DataAccessException{
+        try{
+            pDao.insert(person);
+            ArrayList<Person> list = pDao.findFamily(person.getAssociatedUsername());
+            assertNotNull(list);
+            assertEquals(person.getPersonID(), list.get(0).getPersonID());
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findFamilyFail() throws DataAccessException{
+        try{
+            ArrayList<Person> list = pDao.findFamily(person.getAssociatedUsername());
+            assertNull(list);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
     public void clear() throws DataAccessException {
         try {
             System.out.println("Starting the clear test");
@@ -109,5 +155,35 @@ public class PersonDAOTest {
             System.out.println("There was a problem with deleting from the table");
         }
     }
+    @Test
+    public void clearEmpty(){
+        try{
+            pDao.clear();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void clearPerson(){
+        try{
+            pDao.insert(person);
+            pDao.deletePerson(person.getAssociatedUsername());
+            Person compareTest = pDao.findByUser(person.getPersonID(), person.getAssociatedUsername());
+            assertNull(compareTest);
+        } catch (SQLException | DataAccessException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    @Test
+    public void clearPersonEmpty(){
+        try{
+            pDao.deletePerson(person.getAssociatedUsername());
+        } catch (SQLException | DataAccessException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }
 

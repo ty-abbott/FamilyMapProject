@@ -20,10 +20,12 @@ public class ClearHandler implements HttpHandler {
         if(exchange.getRequestMethod().toUpperCase().equals("POST")) {
             ClearService clear = new ClearService();
             DefaultResponse resp = clear.clearDB();
+            //send to the service to clear the database
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             Writer respData = new OutputStreamWriter(exchange.getResponseBody());
             gson.toJson(resp, respData);
             respData.close();
+            //return response message
         }
         else{
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

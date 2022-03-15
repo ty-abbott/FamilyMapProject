@@ -18,7 +18,7 @@ public class LoadRequest {
     private Person[] persons;
     private Event[] events;
 
-    LoadRequest(){
+    public LoadRequest(){
 
     }
 

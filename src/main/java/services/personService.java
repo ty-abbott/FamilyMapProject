@@ -28,31 +28,37 @@ public class PersonService {
         Connection conn = db.getConnection();
         PersonDAO pDAO = new PersonDAO(conn);
         Person person;
-
+        //getting the username from the authtoken and creating database connections
         if(username == null) {
             PersonResponse resp = new PersonResponse("Error: the authtoken is not valid", false);
             return resp;
+            //if username is null then we return that error. That means there is no user associated with the passed token
         }
+        //check to see if personID is valid string
         if(!(personID instanceof String)) {
             PersonResponse resp = new PersonResponse("Error: the personID is not a string", false);
             return resp;
         }
+        //find the person by the ID and the user
         person = pDAO.findByUser(personID, username);
         db.closeConnection(false);
         if(person == null) {
             PersonResponse resp = new PersonResponse("Error: the person does not exist or is not linked with the user", false);
             return resp;
+            //no person found
         }
         else{
             if(person.getSpouseID()==null || person.getFatherID() == null || person.getMotherID() == null){
                 PersonResponse resp = new PersonResponse(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(),
                         person.getLastName(), person.getGender(), true);
                 return resp;
+                //return response if one of the optional values are null
             }
             else{
                 PersonResponse resp = new PersonResponse(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(),
                         person.getLastName(), person.getGender(), person.getFatherID(), person.getMotherID(), person.getSpouseID(), true);
                 return resp;
+                //response if theyre all filled out
             }
         }
     }

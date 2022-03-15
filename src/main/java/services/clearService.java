@@ -20,12 +20,14 @@ public class ClearService {
      * @return a response on whether or not the service worked.
      */
     public DefaultResponse clearDB() throws DataAccessException {
+        //create the database connection and then the DAO objects
         Connection conn = db.getConnection();
         AuthTokenDAO aDAO = new AuthTokenDAO(conn);
         EventDAO eDAO = new EventDAO(conn);
         PersonDAO pDAO = new PersonDAO(conn);
         UserDAO uDAO = new UserDAO(conn);
         try{
+            //clear the tables of the database
             System.out.println("Clearing the database.");
             aDAO.clear();
             eDAO.clear();

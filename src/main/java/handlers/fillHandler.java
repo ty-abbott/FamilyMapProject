@@ -26,6 +26,7 @@ public class FillHandler implements HttpHandler {
                     System.out.println(data[i]);
                 }
                 System.out.println(data.length);
+                //send data to the server
                 if (data.length>2){
                     service = new FillService(data[2], Integer.parseInt(data[3]));
                 }
@@ -39,6 +40,7 @@ public class FillHandler implements HttpHandler {
                 Writer respData = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(resp, respData);
                 respData.close();
+                //return data from the server
             }
             else {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
